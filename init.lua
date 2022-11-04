@@ -225,6 +225,14 @@ local config = {
         -- Configure plugins
         plugins = {
                 init = {
+
+                        -- Syntax highlighting
+                        ["nvim-treesitter/nvim-treesitter"] = {
+                                run = function() require("nvim-treesitter.install").update { with_sync = true } end,
+                                event = "BufEnter",
+                                config = function() require "configs.treesitter" end,
+                                branch = "v0.8.0",
+                        },
                         -- You can disable default plugins as follows:
                         -- ["goolord/alpha-nvim"] = { disable = true },
 
@@ -238,7 +246,24 @@ local config = {
                         --     require("lsp_signature").setup()
                         --   end,
                         -- },
-
+                        -- 用于跑测试用
+                        {
+                                "nvim-neotest/neotest",
+                                requires = {
+                                        "nvim-lua/plenary.nvim",
+                                        "nvim-treesitter/nvim-treesitter",
+                                        "antoinemadec/FixCursorHold.nvim",
+                                        "nvim-neotest/neotest-go",
+                                },
+                                event = "BufRead",
+                                config = function()
+                                        require("neotest").setup({
+                                                adapters = {
+                                                        require("neotest-go"),
+                                                },
+                                        })
+                                end
+                        },
                         -- We also support a key value style plugin definition similar to NvChad:
                         -- ["ray-x/lsp_signature.nvim"] = {
                         --   event = "BufRead",
@@ -246,6 +271,7 @@ local config = {
                         --     require("lsp_signature").setup()
                         --   end,
                         -- },
+
                 },
                 -- All other entries override the require("<key>").setup({...}) call for default plugins
                 ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
@@ -264,6 +290,7 @@ local config = {
                 end,
                 treesitter = { -- overrides `require("treesitter").setup(...)`
                         -- ensure_installed = { "lua" },
+                        lock = true
                 },
                 -- use mason-lspconfig to configure LSP installations
                 ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
