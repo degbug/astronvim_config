@@ -1,3 +1,10 @@
+local Terminal = require('toggleterm.terminal').Terminal
+
+local lazyTest = Terminal:new({
+  cmd = "ls",
+  close_on_exit = false,
+})
+
 return {
   -- first key is the mode
   n = {
@@ -12,18 +19,33 @@ return {
     ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
     ["<TAB>"] = { "<cmd>BufferLineCycleNext<cr>", desc = "Move buffer tab right" },
     ["<S-TAB>"] = { "<cmd>BufferLineCyclePrev<cr>", desc = "Move buffer tab left" },
+    ["gr"] = { "<cmd>Telescope lsp_references<cr>", desc = "lsp reference" },
+    ["go"] = { "<cmd>Telescope lsp_document_symbols<cr>", desc = "lsp_document_symbols" },
+    ["<leader><C-f>"] = { "<cmd> Telescope live_grep<cr>", desc = "live_grep" },
     ["<leader>1"] = {
       function()
         vim.lsp.buf.code_action()
       end,
       desc = "LSP code action"
 
-    }
+    },
+    ["<C-f>"] = { "/", desc = "" },
+
+
+    -- neotest
+    ["<leader>rt"] = { "<cmd>TestNearest<cr>", desc = "TestNearest" },
+
+    ["<leader>rs"] = { function()
+
+      lazyTest:toggle()
+    end, desc = "test" }
+
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },
   t = {
     -- setting a mapping to false will disable it
     -- ["<esc>"] = false,
+    ["<esc>"] = { "<C-\\><C-n>", desc = "normal mode" }
   },
 }
