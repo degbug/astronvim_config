@@ -1,3 +1,3 @@
 return { -- overrides `require("mason-null-ls").setup(...)`
-  -- ensure_installed = { "prettier", "stylua" },
+  ensure_installed = { "prettier", "stylua" },
 }

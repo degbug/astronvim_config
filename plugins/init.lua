@@ -1,89 +1,93 @@
 return {
-  -- Syntax highlighting
-  ["nvim-treesitter/nvim-treesitter"] = {
-    run = function() require("nvim-treesitter.install").update { with_sync = true } end,
-    event = "BufEnter",
-    config = function() require "configs.treesitter" end,
-    branch = "v0.8.0",
-  },
-  -- You can disable default plugins as follows:
-  -- ["goolord/alpha-nvim"] = { disable = true },
+	-- Syntax highlighting
+	["nvim-treesitter/nvim-treesitter"] = {
+		run = function()
+			require("nvim-treesitter.install").update({ with_sync = true })
+		end,
+		event = "BufEnter",
+		config = function()
+			require("configs.treesitter")
+		end,
+		branch = "v0.8.0",
+	},
+	-- You can disable default plugins as follows:
+	-- ["goolord/alpha-nvim"] = { disable = true },
 
-  -- You can also add new plugins here as well:
-  -- Add plugins, the packer syntax without the "use"
-  -- { "andweeb/presence.nvim" },
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("lsp_signature").setup()
-  --   end,
-  -- },
-  -- 用于跑测试用
-  -- {
-  --   "nvim-neotest/neotest",
-  --   requires = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "antoinemadec/FixCursorHold.nvim",
-  --     "nvim-neotest/neotest-go",
-  --   },
-  --   event = "BufRead",
-  --   config = function()
-  --     require("neotest").setup({
-  --       adapters = {
-  --         require("neotest-go"),
-  --       },
-  --     })
-  --   end,
-  -- },
-  -- We also support a key value style plugin definition similar to NvChad:
-  -- ["ray-x/lsp_signature.nvim"] = {
-  --   event = "BufRead",
-  --   config = function()
-  --     require("lsp_signature").setup()
-  --   end,
-  -- },
-  -- https://github.com/kevinhwang91/nvim-ufo#table-of-contents
-  -- 折叠代码
-  {
-    'kevinhwang91/nvim-ufo',
-    requires = 'kevinhwang91/promise-async',
-    event = "BufRead",
-    config = function()
-      -- require('ufo').setup({
-      --         fold_virt_text_handler = fold_handler
-      -- })
-      require('ufo').setup()
-    end
-  },
-  -- https://github.com/glepnir/lspsaga.nvim
-  {
-    "glepnir/lspsaga.nvim",
-    branch = "main",
-    event = "BufRead",
-    config = function()
-      local saga = require("lspsaga")
+	-- You can also add new plugins here as well:
+	-- Add plugins, the packer syntax without the "use"
+	-- { "andweeb/presence.nvim" },
+	-- {
+	--   "ray-x/lsp_signature.nvim",
+	--   event = "BufRead",
+	--   config = function()
+	--     require("lsp_signature").setup()
+	--   end,
+	-- },
+	-- 用于跑测试用
+	-- {
+	--   "nvim-neotest/neotest",
+	--   requires = {
+	--     "nvim-lua/plenary.nvim",
+	--     "nvim-treesitter/nvim-treesitter",
+	--     "antoinemadec/FixCursorHold.nvim",
+	--     "nvim-neotest/neotest-go",
+	--   },
+	--   event = "BufRead",
+	--   config = function()
+	--     require("neotest").setup({
+	--       adapters = {
+	--         require("neotest-go"),
+	--       },
+	--     })
+	--   end,
+	-- },
+	-- We also support a key value style plugin definition similar to NvChad:
+	-- ["ray-x/lsp_signature.nvim"] = {
+	--   event = "BufRead",
+	--   config = function()
+	--     require("lsp_signature").setup()
+	--   end,
+	-- },
+	-- https://github.com/kevinhwang91/nvim-ufo#table-of-contents
+	-- 折叠代码
+	{
+		"kevinhwang91/nvim-ufo",
+		requires = "kevinhwang91/promise-async",
+		event = "BufRead",
+		config = function()
+			-- require('ufo').setup({
+			--         fold_virt_text_handler = fold_handler
+			-- })
+			require("ufo").setup()
+		end,
+	},
+	-- https://github.com/glepnir/lspsaga.nvim
+	{
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+		event = "BufRead",
+		config = function()
+			local saga = require("lspsaga")
 
-      saga.init_lsp_saga({
-        -- your configuration
-      })
-    end,
-  },
-  {
-    "klen/nvim-test",
-    event = "BufRead",
-    config = function()
-      require('nvim-test').setup({
-        term = "toggleterm"
-      })
-      require('nvim-test.runners.go-test'):setup {
-        command = "go",
-        args = { "test", "-count=1", "-v" }
-      }
-
-    end
-  },
+			saga.init_lsp_saga({
+				-- your configuration
+			})
+		end,
+	},
+	-- {
+	--   "klen/nvim-test",
+	--   event = "BufRead",
+	--   config = function()
+	--     require('nvim-test').setup({
+	--       term = "toggleterm"
+	--     })
+	--     require('nvim-test.runners.go-test'):setup {
+	--       command = "go",
+	--       args = { "test", "-count=1", "-v" }
+	--     }
+	--
+	--   end
+	-- },
 }
 
 -- local fold_handler = function(virtText, lnum, endLnum, width, truncate)
